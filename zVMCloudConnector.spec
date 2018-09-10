@@ -4,7 +4,7 @@
 #
 Name     : zVMCloudConnector
 Version  : 1.2.4
-Release  : 1
+Release  : 2
 URL      : https://files.pythonhosted.org/packages/d9/b8/533ac074519b8c665a9d1c51717c8511cee762ff90b56b629f103133dbc0/zVMCloudConnector-1.2.4.tar.gz
 Source0  : https://files.pythonhosted.org/packages/d9/b8/533ac074519b8c665a9d1c51717c8511cee762ff90b56b629f103133dbc0/zVMCloudConnector-1.2.4.tar.gz
 Summary  : z/VM cloud management library in Python
@@ -94,7 +94,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1536550461
+export SOURCE_DATE_EPOCH=1536614189
 python3 setup.py build -b py3
 
 %install
@@ -108,7 +108,7 @@ echo ----[ mark ]----
 
 %files
 %defattr(-,root,root,-)
-/var/lib/zvmsdk/setupDisk
+%exclude /var/lib/zvmsdk/setupDisk
 
 %files bin
 %defattr(-,root,root,-)
