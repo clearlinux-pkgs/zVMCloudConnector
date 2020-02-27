@@ -4,7 +4,7 @@
 #
 Name     : zVMCloudConnector
 Version  : 1.4.1
-Release  : 11
+Release  : 12
 URL      : https://files.pythonhosted.org/packages/11/92/9f704de9759816e7b9897b9fb41285b421498b4642551b6fbcccd2850008/zVMCloudConnector-1.4.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/11/92/9f704de9759816e7b9897b9fb41285b421498b4642551b6fbcccd2850008/zVMCloudConnector-1.4.1.tar.gz
 Summary  : z/VM cloud management library in Python
@@ -22,19 +22,50 @@ Requires: jsonschema
 Requires: netaddr
 Requires: requests
 Requires: six
+BuildRequires : PyJWT
+BuildRequires : Routes
+BuildRequires : WebOb
 BuildRequires : buildreq-distutils3
+BuildRequires : jsonschema
+BuildRequires : netaddr
 BuildRequires : pluggy
 BuildRequires : py-python
 BuildRequires : pytest
+BuildRequires : requests
+BuildRequires : six
 BuildRequires : tox
 BuildRequires : virtualenv
 
 %description
 z/VM Cloud Connector
 ********************
+
 Description
 ===========
 z/VM cloud connector is a development sdk for manage z/VM. It provides a set of APIs to operate z/VM including guest, image, network, volume etc.
+
+Just like os-win for nova hyperv driver and oslo.vmware for nova vmware driver, z/VM cloud connector (zVMCloudConnector) is for nova z/vm driver and other z/VM related openstack driver such as neutron, ceilometer.
+
+Quickstart
+==========
+Please refer to `Quick Start Guide <https://cloudlib4zvm.readthedocs.io/en/latest/quickstart.html>`_.
+
+Documentation
+=============
+Please refer to `Documentation of z/VM Cloud Connector <https://cloudlib4zvm.readthedocs.io/en/latest/index.html>`_.
+
+License
+=======
+This package is licensed under the `Apache 2.0 License`_.
+
+.. _Apache 2.0 License: https://raw.githubusercontent.com/zhmcclient/python-zhmcclient/master/LICENSE
+
+Bug reporting
+=============
+If you encounter any problem with this package, please open a bug against
+`cloud connector issue tracker`_
+
+.. _cloud connector issue tracker: https://bugs.launchpad.net/python-zvm-sdk/+bug
 
 %package bin
 Summary: bin components for the zVMCloudConnector package.
@@ -68,6 +99,7 @@ python components for the zVMCloudConnector package.
 Summary: python3 components for the zVMCloudConnector package.
 Group: Default
 Requires: python3-core
+Provides: pypi(zVMCloudConnector)
 
 %description python3
 python3 components for the zVMCloudConnector package.
@@ -83,14 +115,20 @@ services components for the zVMCloudConnector package.
 
 %prep
 %setup -q -n zVMCloudConnector-1.4.1
+cd %{_builddir}/zVMCloudConnector-1.4.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1552668226
-export LDFLAGS="${LDFLAGS} -fno-lto"
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1582847154
+# -Werror is for werrorists
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 
@@ -98,15 +136,16 @@ python3 setup.py build
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/zVMCloudConnector
-cp LICENSE %{buildroot}/usr/share/package-licenses/zVMCloudConnector/LICENSE
+cp %{_builddir}/zVMCloudConnector-1.4.1/LICENSE %{buildroot}/usr/share/package-licenses/zVMCloudConnector/ab493383353f91b9ccc38085a5044fbef904b58b
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
+## Remove excluded files
+rm -f %{buildroot}/var/lib/zvmsdk/setupDisk
 
 %files
 %defattr(-,root,root,-)
-%exclude /var/lib/zvmsdk/setupDisk
 
 %files bin
 %defattr(-,root,root,-)
@@ -116,7 +155,7 @@ echo ----[ mark ]----
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/zVMCloudConnector/LICENSE
+/usr/share/package-licenses/zVMCloudConnector/ab493383353f91b9ccc38085a5044fbef904b58b
 
 %files python
 %defattr(-,root,root,-)
