@@ -4,7 +4,7 @@
 #
 Name     : zVMCloudConnector
 Version  : 1.4.1
-Release  : 12
+Release  : 13
 URL      : https://files.pythonhosted.org/packages/11/92/9f704de9759816e7b9897b9fb41285b421498b4642551b6fbcccd2850008/zVMCloudConnector-1.4.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/11/92/9f704de9759816e7b9897b9fb41285b421498b4642551b6fbcccd2850008/zVMCloudConnector-1.4.1.tar.gz
 Summary  : z/VM cloud management library in Python
@@ -37,35 +37,16 @@ BuildRequires : tox
 BuildRequires : virtualenv
 
 %description
-z/VM Cloud Connector
 ********************
-
-Description
-===========
-z/VM cloud connector is a development sdk for manage z/VM. It provides a set of APIs to operate z/VM including guest, image, network, volume etc.
-
-Just like os-win for nova hyperv driver and oslo.vmware for nova vmware driver, z/VM cloud connector (zVMCloudConnector) is for nova z/vm driver and other z/VM related openstack driver such as neutron, ceilometer.
-
-Quickstart
-==========
-Please refer to `Quick Start Guide <https://cloudlib4zvm.readthedocs.io/en/latest/quickstart.html>`_.
-
-Documentation
-=============
-Please refer to `Documentation of z/VM Cloud Connector <https://cloudlib4zvm.readthedocs.io/en/latest/index.html>`_.
-
-License
-=======
-This package is licensed under the `Apache 2.0 License`_.
-
-.. _Apache 2.0 License: https://raw.githubusercontent.com/zhmcclient/python-zhmcclient/master/LICENSE
-
-Bug reporting
-=============
-If you encounter any problem with this package, please open a bug against
-`cloud connector issue tracker`_
-
-.. _cloud connector issue tracker: https://bugs.launchpad.net/python-zvm-sdk/+bug
+        
+        Description
+        ===========
+        z/VM cloud connector is a development sdk for manage z/VM. It provides a set of APIs to operate z/VM including guest, image, network, volume etc.
+        
+        Just like os-win for nova hyperv driver and oslo.vmware for nova vmware driver, z/VM cloud connector (zVMCloudConnector) is for nova z/vm driver and other z/VM related openstack driver such as neutron, ceilometer.
+        
+        Quickstart
+        ==========
 
 %package bin
 Summary: bin components for the zVMCloudConnector package.
@@ -99,7 +80,14 @@ python components for the zVMCloudConnector package.
 Summary: python3 components for the zVMCloudConnector package.
 Group: Default
 Requires: python3-core
-Provides: pypi(zVMCloudConnector)
+Provides: pypi(zvmcloudconnector)
+Requires: pypi(jsonschema)
+Requires: pypi(netaddr)
+Requires: pypi(pyjwt)
+Requires: pypi(requests)
+Requires: pypi(routes)
+Requires: pypi(six)
+Requires: pypi(webob)
 
 %description python3
 python3 components for the zVMCloudConnector package.
@@ -122,8 +110,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1582847154
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1583696376
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
