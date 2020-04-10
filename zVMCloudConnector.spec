@@ -4,7 +4,7 @@
 #
 Name     : zVMCloudConnector
 Version  : 1.4.1
-Release  : 13
+Release  : 14
 URL      : https://files.pythonhosted.org/packages/11/92/9f704de9759816e7b9897b9fb41285b421498b4642551b6fbcccd2850008/zVMCloudConnector-1.4.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/11/92/9f704de9759816e7b9897b9fb41285b421498b4642551b6fbcccd2850008/zVMCloudConnector-1.4.1.tar.gz
 Summary  : z/VM cloud management library in Python
@@ -110,11 +110,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1583696376
+export SOURCE_DATE_EPOCH=1586544817
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
-export FCFLAGS="$CFLAGS -fno-lto "
-export FFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
 export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
@@ -130,6 +130,9 @@ cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
 ## Remove excluded files
 rm -f %{buildroot}/var/lib/zvmsdk/setupDisk
+## install_append content
+mv %{buildroot}/lib/* %{buildroot}/usr/lib/
+## install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -153,4 +156,4 @@ rm -f %{buildroot}/var/lib/zvmsdk/setupDisk
 
 %files services
 %defattr(-,root,root,-)
-/lib/systemd/system/sdkserver.service
+/usr/lib/systemd/system/sdkserver.service
