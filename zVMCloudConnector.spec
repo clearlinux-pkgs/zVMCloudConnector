@@ -4,7 +4,7 @@
 #
 Name     : zVMCloudConnector
 Version  : 1.4.1
-Release  : 14
+Release  : 15
 URL      : https://files.pythonhosted.org/packages/11/92/9f704de9759816e7b9897b9fb41285b421498b4642551b6fbcccd2850008/zVMCloudConnector-1.4.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/11/92/9f704de9759816e7b9897b9fb41285b421498b4642551b6fbcccd2850008/zVMCloudConnector-1.4.1.tar.gz
 Summary  : z/VM cloud management library in Python
